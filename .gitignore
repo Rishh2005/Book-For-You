@@ -1,0 +1,24 @@
+from cab_booking_ai.service import CabBookingService
+
+
+def test_prediction_structure():
+    service = CabBookingService()
+    result = service.predict({
+        'pickup_hour': 18,
+        'pickup_day': 5,
+        'traffic_density': 0.82,
+        'weather_condition': 'Rain',
+        'pickup_area': 'Central',
+        'distance_km': 8.5,
+        'driver_count': 23,
+        'rider_waiting_minutes': 6,
+        'trip_duration_minutes': 22.0,
+    })
+
+    assert 'demand_score' in result
+    assert 'booking_probability' in result
+    assert 'estimated_fare' in result
+    assert 'surge_multiplier' in result
+    assert 'estimated_pickup_minutes' in result
+    assert 'recommended_driver_zone' in result
+    assert 0 <= result['booking_probability'] <= 1
